@@ -70,6 +70,9 @@ def enableProguardInReleaseBuilds = false
  * give correct results when using with locales other than en-US. Note that
  * this variant is about 6MiB larger per architecture than default.
  */
+
+apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
+
 def jscFlavor = 'org.webkit:android-jsc:+'
 
 android {
@@ -111,8 +114,11 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
 
+    implementation project(':react-native-vector-icons')
+
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
+
     } else {
         implementation jscFlavor
     }
