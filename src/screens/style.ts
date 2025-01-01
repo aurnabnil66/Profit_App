@@ -64,6 +64,40 @@ var styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   },
+  imageSize: {
+    height: scale(62),
+    width: scale(62),
+  },
+  imageContainerStyle: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  textUnderImage: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: '800',
+    textAlign: 'center',
+    bottom: scale(8),
+  },
+  uppderMiddleButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '800',
+    textAlign: 'center',
+    bottom: scale(4),
+  },
+  upperMiddleViewStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: scale(38),
+    padding: scale(8),
+    top: scale(10),
+    justifyContent: 'center',
+    zIndex: 1,
+  },
+  upperMiddleButtonTextPosition: {
+    top: scale(12),
+  },
 });
 
 export default styles;
