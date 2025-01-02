@@ -90,13 +90,40 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: scale(38),
-    padding: scale(8),
+    padding: scale(6),
     top: scale(10),
     justifyContent: 'center',
     zIndex: 1,
   },
   upperMiddleButtonTextPosition: {
     top: scale(12),
+  },
+  upperMiddleButtonStyle: {
+    height: scale(45),
+    width: scale(90),
+    borderRadius: 10,
+    marginBottom: scale(18),
+    alignItems: 'center',
+  },
+  upperMiddleTopViewStyle: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  upperMiddleTopViewProperties: {
+    height: scale(75),
+    width: scale(48),
+    borderRadius: 50,
+    marginBottom: scale(-35),
+  },
+  middleBoxViewStyle: {
+    alignItems: 'center',
+    bottom: scale(35),
+  },
+  middleBoxViewProperties: {
+    height: scale(500),
+    width: scale(340),
+    borderRadius: 50,
+    alignItems: 'center',
   },
 });
 

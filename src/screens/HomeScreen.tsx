@@ -12,6 +12,7 @@ const points = ['1000', '5000', '10000', '50000'];
 
 const HomeScreen = () => {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [selectedFoodItem, setSelectedFoodItem] = useState<number | null>(null);
 
   const toggleSelection = (index: number) => {
     setSelectedOption(selectedOption === index ? null : index);
@@ -95,77 +96,65 @@ const HomeScreen = () => {
 
         {/* Upper Middle View */}
         <View style={styles.upperMiddleViewStyle}>
-          <LinearGradient
-            start={{x: 1, y: 0}}
-            end={{x: 0, y: 1}}
-            colors={['#EFEFAA', '#D3F698', '#84E282', '#B6DAFD']}
-            style={{height: 100, width: 100, borderRadius: 50}}>
-            <View style={styles.imageContainerStyle}>
-              <Image
-                source={require('../assets/salad.png')} // Path to the PNG file
-                style={styles.imageSize}
-                resizeMode="contain" // Adjust how the image fits
-              />
-              <Text style={styles.textUnderImage}>Salad</Text>
-            </View>
-          </LinearGradient>
+          <TouchableOpacity>
+            <LinearGradient
+              start={{x: 1, y: 0}}
+              end={{x: 0, y: 1}}
+              colors={['#EFEFAA', '#D3F698', '#84E282', '#B6DAFD']}
+              style={{height: 100, width: 100, borderRadius: 50}}>
+              <View style={styles.imageContainerStyle}>
+                <Image
+                  source={require('../assets/salad.png')} // Path to the PNG file
+                  style={styles.imageSize}
+                  resizeMode="contain" // Adjust how the image fits
+                />
+                <Text style={styles.textUnderImage}>Salad</Text>
+              </View>
+            </LinearGradient>
+          </TouchableOpacity>
 
-          <View style={{flexDirection: 'column', alignItems: 'center'}}>
+          <View style={styles.upperMiddleTopViewStyle}>
             <LinearGradient
               colors={['#4BBD5E', '#D3F698', '#84E282']}
               start={{x: 0, y: 1}}
               end={{x: 1, y: 0}}
-              style={{
-                height: 80,
-                width: 50,
-                borderRadius: 50,
-                marginBottom: -35,
-              }}></LinearGradient>
+              style={styles.upperMiddleTopViewProperties}></LinearGradient>
             <LinearGradient
               colors={['#fad7a0', '#FFAB3F']}
               start={{x: 0, y: 0}}
               end={{x: 0, y: 1}}
-              style={{
-                height: 50,
-                width: 100,
-                borderRadius: 10,
-                marginBottom: 20,
-                alignItems: 'center',
-              }}>
+              style={styles.upperMiddleButtonStyle}>
               <View style={styles.upperMiddleButtonTextPosition}>
                 <Text style={styles.uppderMiddleButtonText}>5</Text>
               </View>
             </LinearGradient>
           </View>
 
-          <LinearGradient
-            start={{x: 1, y: 0}}
-            end={{x: 0, y: 1}}
-            colors={['#EFEFAA', '#D3F698', '#84E282', '#B6DAFD']}
-            style={{height: 100, width: 100, borderRadius: 50}}>
-            <View style={styles.imageContainerStyle}>
-              <Image
-                source={require('../assets/pizza.png')} // Path to the PNG file
-                style={styles.imageSize}
-                resizeMode="contain" // Adjust how the image fits
-              />
-              <Text style={styles.textUnderImage}>Pizza</Text>
-            </View>
-          </LinearGradient>
+          <TouchableOpacity>
+            <LinearGradient
+              start={{x: 1, y: 0}}
+              end={{x: 0, y: 1}}
+              colors={['#EFEFAA', '#D3F698', '#84E282', '#B6DAFD']}
+              style={{height: 100, width: 100, borderRadius: 50}}>
+              <View style={styles.imageContainerStyle}>
+                <Image
+                  source={require('../assets/pizza.png')} // Path to the PNG file
+                  style={styles.imageSize}
+                  resizeMode="contain" // Adjust how the image fits
+                />
+                <Text style={styles.textUnderImage}>Pizza</Text>
+              </View>
+            </LinearGradient>
+          </TouchableOpacity>
         </View>
 
         {/* Middle Box View */}
-        <View style={{alignItems: 'center', bottom: 40}}>
+        <View style={styles.middleBoxViewStyle}>
           <LinearGradient
             start={{x: 0, y: 0}}
             end={{x: 0, y: 1}}
             colors={['#B6DAFD', '#D3F698', '#d6eaf8', '#d2b4de', '#a569bd']}
-            style={{
-              height: 600,
-              width: 390,
-              borderRadius: 50,
-              alignItems: 'center',
-            }}>
+            style={styles.middleBoxViewProperties}>
             <Text
               style={{
                 fontSize: 14,
@@ -176,46 +165,59 @@ const HomeScreen = () => {
               Today's Profit: 0
             </Text>
 
-            <LinearGradient
-              colors={['#fad7a0', '#FFAB3F']}
-              start={{x: 1, y: 1}}
-              end={{x: 1, y: 0}}
+            <View
               style={{
                 height: 300,
                 width: 370,
                 borderRadius: 50,
+                borderColor: '#4BBD5E',
+                borderWidth: 4,
                 marginTop: 50,
+                overflow: 'hidden',
               }}>
-              <View
+              <LinearGradient
+                colors={['#fad7a0', '#FFAB3F']}
+                start={{x: 1, y: 1}}
+                end={{x: 1, y: 0}}
                 style={{
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                  justifyContent: 'space-around', // Adjust spacing between items
-                  paddingVertical: 10,
+                  height: '100%',
+                  width: '100%',
                 }}>
-                {foodItems.map((item, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    style={{
-                      height: 70,
-                      width: 70,
-                      backgroundColor: 'white',
-                      borderRadius: 50,
-                      borderColor: '#4BBD5E',
-                      borderWidth: 2,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      margin: 10, // Add margin for spacing
-                      marginBottom: 50,
-                    }}>
-                    <Image
-                      source={item.image}
-                      style={{height: 50, width: 50}}
-                    />
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </LinearGradient>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-around', // Adjust spacing between items
+                    paddingVertical: 10,
+                  }}>
+                  {foodItems.map((item, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      style={{
+                        height: 70,
+                        width: 70,
+                        backgroundColor: 'white',
+                        borderRadius: 50,
+                        borderColor:
+                          selectedFoodItem === index ? 'red' : '#4BBD5E',
+                        borderWidth: 2,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        margin: 10, // Add margin for spacing
+                        marginBottom: 50,
+                      }}
+                      onPressIn={() => setSelectedFoodItem(index)} // Change border color on press
+                      onPressOut={() => setSelectedFoodItem(null)} // Revert border color after release
+                    >
+                      <Image
+                        source={item.image}
+                        style={{height: 50, width: 50}}
+                      />
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </LinearGradient>
+            </View>
 
             {/* Buttons */}
             <View style={{flexDirection: 'row', gap: 10, padding: 10, top: 20}}>
