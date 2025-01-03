@@ -6,9 +6,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontawesome6 from 'react-native-vector-icons/FontAwesome6';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialComumityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import foodItems from '../utils/foodItems';
-import FoodItemModal from '../components/foodItemModal';
+import ConformationModal from '../components/conformationModal';
 
 const points = ['1000', '5000', '10000', '50000'];
 
@@ -16,20 +17,10 @@ const HomeScreen = () => {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [selectedFoodItem, setSelectedFoodItem] = useState<number | null>(null);
   const [isModalVisible, setModalVisible] = useState(false);
-  const [selectedFood, setSelectedFood] = useState(null);
+  const [selectedPoint, setSelectedPoint] = useState<number | null>(null);
 
   const toggleSelection = (index: number) => {
     setSelectedOption(selectedOption === index ? null : index);
-  };
-
-  const showModal = (item: any) => {
-    setSelectedFood(item);
-    setModalVisible(true);
-  };
-
-  const hideModal = () => {
-    setModalVisible(false);
-    setSelectedFood(null);
   };
 
   return (
@@ -200,7 +191,7 @@ const HomeScreen = () => {
                             borderColor:
                               selectedFoodItem === index ? 'red' : '#4BBD5E',
                           }}
-                          onPress={() => showModal(item)} // Show modal with the selected item
+                          onPress={() => setModalVisible(true)} // Show modal with the selected item
                           onPressIn={() => setSelectedFoodItem(index)} // Change border color on press
                           onPressOut={() => setSelectedFoodItem(null)} // Revert border color after release
                         >
@@ -233,12 +224,19 @@ const HomeScreen = () => {
                       )}
                     </View>
                   ))}
+                  {/* Modal should be rendered outside the container */}
+
+                  <ConformationModal
+                    isVisible={isModalVisible}
+                    onClose={() => setModalVisible(false)}
+                    point={points[selectedPoint || 0]}
+                  />
                 </View>
                 <View style={styles.middleHorizontalSmallContainer}>
-                  <FontAwesome
+                  <MaterialIcons
                     style={styles.middleHorizontalSmallContaineroIcon}
-                    name="level-up"
-                    size={22}
+                    name="trending-up"
+                    size={28}
                     color="#fff"
                   />
                 </View>
@@ -256,9 +254,13 @@ const HomeScreen = () => {
                     <View style={styles.pointsButtonBaseLayer} />
 
                     {/* Main button with gradient */}
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => setSelectedPoint(index)}>
                       <LinearGradient
-                        colors={['#52C953', '#4BBD5E']}
+                        colors={
+                          selectedPoint === index
+                            ? ['#f39c12', '#FFAB3F']
+                            : ['#52C953', '#4BBD5E']
+                        }
                         style={styles.mainPointsButton}>
                         <Text style={styles.pointsButtonText}>{point}</Text>
                       </LinearGradient>
@@ -266,17 +268,29 @@ const HomeScreen = () => {
                   </View>
                 ))}
               </View>
+
+              {/* Bottom Part */}
+              <View style={styles.bottomComponentsProperties}>
+                <View style={styles.bottomBar}>
+                  <View style={styles.bottomBarProperties}>
+                    <View style={styles.circleInBottomBar}>
+                      <MaterialComumityIcons
+                        name="lightning-bolt"
+                        size={20}
+                        color="#f8c471"
+                      />
+                    </View>
+                    <Text style={styles.bottomBartext}>89</Text>
+                  </View>
+                </View>
+                <TouchableOpacity style={styles.rechargeButton}>
+                  <Text style={styles.rechargeText}>Recharge</Text>
+                </TouchableOpacity>
+              </View>
             </LinearGradient>
           </View>
         </LinearGradient>
       </View>
-
-      {/* Modal should be rendered outside the container */}
-      <FoodItemModal
-        isVisible={isModalVisible}
-        hideModal={hideModal}
-        selectedFoodItem={selectedFood}
-      />
     </>
   );
 };

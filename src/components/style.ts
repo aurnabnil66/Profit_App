@@ -1,11 +1,11 @@
 import {StyleSheet} from 'react-native';
+import {scale} from 'react-native-size-matters';
 
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-
-    zIndex: 1,
+    flex: 1,
   },
   overlay: {
     position: 'absolute',
@@ -13,35 +13,65 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
   },
   modal: {
-    backgroundColor: 'white',
+    backgroundColor: '#fcf3cf',
     padding: 20,
     borderRadius: 10,
-    width: 300,
+    width: scale(300),
     justifyContent: 'center',
     alignItems: 'center',
   },
-  image: {
-    width: 50,
-    height: 50,
-    borderRadius: 50,
-  },
   modalText: {
-    marginTop: 10,
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#FFAB3F',
   },
-  closeButton: {
-    marginTop: 20,
-    backgroundColor: '#4BBD5E',
-    padding: 10,
-    borderRadius: 5,
+  modalHeaderText: {
+    color: '#4BBD5E',
+    fontSize: 14,
+    fontWeight: '800',
   },
-  closeButtonText: {
-    color: 'white',
-    fontSize: 16,
+  modalHeader: {
+    height: scale(35),
+    width: scale(300),
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    bottom: scale(20),
+  },
+  cancelButton: {
+    height: 35,
+    width: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30,
+    borderColor: '#FFAB3F',
+    borderWidth: 1,
+  },
+  modalButtonsProperties: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 40,
+    marginTop: 30,
+  },
+  cancelText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#FFAB3F',
+  },
+  clickToBetButton: {
+    height: 35,
+    width: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30,
+    backgroundColor: '#FFAB3F',
+  },
+  clickToBetText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#fff',
   },
 });
 

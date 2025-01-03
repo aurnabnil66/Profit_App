@@ -125,7 +125,7 @@ var styles = StyleSheet.create({
     bottom: scale(35),
   },
   middleBoxViewProperties: {
-    height: scale(500),
+    height: scale(520),
     width: scale(340),
     borderRadius: 50,
     alignItems: 'center',
@@ -222,6 +222,54 @@ var styles = StyleSheet.create({
   foodItemsImageStyle: {
     height: 50,
     width: 50,
+  },
+  rechargeButton: {
+    height: scale(28),
+    width: scale(70),
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30,
+    backgroundColor: '#FFAB3F',
+  },
+  bottomComponentsProperties: {
+    flexDirection: 'row',
+    gap: 30,
+    marginTop: 10,
+  },
+  rechargeText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#fff',
+  },
+  bottomBarProperties: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  bottomBar: {
+    height: scale(28),
+    width: scale(140),
+    borderRadius: 50,
+    borderWidth: 1,
+    borderColor: '#FFAB3F',
+    backgroundColor: '#9b59b6',
+    justifyContent: 'center',
+  },
+  bottomBartext: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  circleInBottomBar: {
+    height: scale(28),
+    width: scale(28),
+    backgroundColor: '#e67e22',
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: '#FFAB3F',
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: scale(3),
   },
 });
 
