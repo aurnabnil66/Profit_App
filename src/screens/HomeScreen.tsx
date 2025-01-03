@@ -6,6 +6,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Fontawesome6 from 'react-native-vector-icons/FontAwesome6';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import foodItems from '../utils/foodItems';
 import FoodItemModal from '../components/foodItemModal';
 
@@ -115,7 +116,7 @@ const HomeScreen = () => {
                 start={{x: 1, y: 0}}
                 end={{x: 0, y: 1}}
                 colors={['#EFEFAA', '#D3F698', '#84E282', '#B6DAFD']}
-                style={{height: 100, width: 100, borderRadius: 50}}>
+                style={{height: 90, width: 90, borderRadius: 50}}>
                 <View style={styles.imageContainerStyle}>
                   <Image
                     source={require('../assets/salad.png')} // Path to the PNG file
@@ -149,7 +150,7 @@ const HomeScreen = () => {
                 start={{x: 1, y: 0}}
                 end={{x: 0, y: 1}}
                 colors={['#EFEFAA', '#D3F698', '#84E282', '#B6DAFD']}
-                style={{height: 100, width: 100, borderRadius: 50}}>
+                style={{height: 90, width: 90, borderRadius: 50}}>
                 <View style={styles.imageContainerStyle}>
                   <Image
                     source={require('../assets/pizza.png')} // Path to the PNG file
@@ -180,99 +181,74 @@ const HomeScreen = () => {
               </Text>
 
               {/* Inner Middle Box with Gradient */}
-              <View
-                style={{
-                  height: 300,
-                  width: 370,
-                  borderRadius: 50,
-                  borderColor: '#4BBD5E',
-                  borderWidth: 4,
-                  marginTop: 50,
-                  overflow: 'hidden',
-                }}>
+              <View style={styles.innerMiddleBoxView}>
                 <LinearGradient
                   colors={['#fad7a0', '#FFAB3F']}
                   start={{x: 1, y: 1}}
                   end={{x: 1, y: 0}}
-                  style={{
-                    height: '100%',
-                    width: '100%',
-                  }}>
+                  style={styles.innerMiddleBoxViewProperties}>
                   {/* Display Food Items */}
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      flexWrap: 'wrap',
-                      justifyContent: 'space-around',
-                      paddingVertical: 10,
-                    }}>
+                  <View style={styles.foodItemsDisplayProperties}>
                     {foodItems.map((item, index) => (
-                      <TouchableOpacity
-                        key={index}
-                        style={{
-                          height: 70,
-                          width: 70,
-                          backgroundColor: 'white',
-                          borderRadius: 50,
-                          borderColor:
-                            selectedFoodItem === index ? 'red' : '#4BBD5E',
-                          borderWidth: 2,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          margin: 10,
-                          marginBottom: 50,
-                        }}
-                        onPress={() => showModal(item)} // Show modal with the selected item
-                        onPressIn={() => setSelectedFoodItem(index)} // Change border color on press
-                        onPressOut={() => setSelectedFoodItem(null)} // Revert border color after release
-                      >
-                        <Image
-                          source={item.image}
-                          style={{height: 50, width: 50}}
-                        />
-                      </TouchableOpacity>
+                      <View key={index}>
+                        <Text style={styles.foodItemsNameText}>
+                          {item.name}
+                        </Text>
+                        <TouchableOpacity
+                          style={{
+                            ...styles.foodItemsButtonStyle,
+                            borderColor:
+                              selectedFoodItem === index ? 'red' : '#4BBD5E',
+                          }}
+                          onPress={() => showModal(item)} // Show modal with the selected item
+                          onPressIn={() => setSelectedFoodItem(index)} // Change border color on press
+                          onPressOut={() => setSelectedFoodItem(null)} // Revert border color after release
+                        >
+                          <Image
+                            source={item.image}
+                            style={styles.foodItemsImageStyle}
+                          />
+                        </TouchableOpacity>
+                        <Text style={styles.foodItemsRewardText}>
+                          {item.reward}
+                        </Text>
+                      </View>
                     ))}
                   </View>
                 </LinearGradient>
               </View>
 
-              <View
-                style={{
-                  height: 35,
-                  width: 365,
-                  backgroundColor: 'white',
-                  borderRadius: 50,
-                  borderBottomColor: '#4BBD5E',
-                  borderLeftColor: '#4BBD5E',
-                  borderRightColor: '#4BBD5E',
-                  borderLeftWidth: 2,
-                  borderRightWidth: 2,
-                  borderBottomWidth: 2,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  bottom: 15,
-                }}>
-                {foodItems.map((item, index) => (
-                  <View
-                    key={index}
-                    style={{
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      paddingHorizontal: 10,
-                    }}>
-                    {item.image && (
-                      <Image
-                        source={item.image}
-                        style={{height: 25, width: 25}}
-                      />
-                    )}
-                  </View>
-                ))}
+              {/* Middle Horizontal Container */}
+              <View style={{flexDirection: 'row'}}>
+                <View style={styles.middleHorizontalContainer}>
+                  {foodItems.map((item, index) => (
+                    <View
+                      key={index}
+                      style={styles.middleHorizontalContainerProperties}>
+                      {item.image && (
+                        <Image
+                          source={item.image}
+                          style={styles.middleHorizontalContainerImages}
+                        />
+                      )}
+                    </View>
+                  ))}
+                </View>
+                <View style={styles.middleHorizontalSmallContainer}>
+                  <FontAwesome
+                    style={styles.middleHorizontalSmallContaineroIcon}
+                    name="level-up"
+                    size={22}
+                    color="#fff"
+                  />
+                </View>
               </View>
 
+              {/* Middle Horizontal Thin Line */}
+              <View style={styles.middleHorizontalThinLineView}></View>
+
               {/* Buttons */}
-              <View
-                style={{flexDirection: 'row', gap: 10, padding: 10, top: 20}}>
+              <View style={styles.pointButtonProperties}>
                 {points.map((point, index) => (
                   <View style={styles.pointsButtonContainer} key={index}>
                     {/* Base layer for the 3D effect */}
