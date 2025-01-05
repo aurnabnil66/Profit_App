@@ -28,12 +28,13 @@ const HomeScreen = () => {
     // Sequentially hover food items with a faster delay
     for (let index = 0; index < foodItems.length; index++) {
       setHoveredFoodItem(index); // Update hover state
-      await sleep(150); // Wait 150ms (adjusted for faster hover)
+      await sleep(500); // Wait 150ms (adjusted for faster hover)
     }
     // Reset hover after all items are hovered
     setHoveredFoodItem(null);
   };
 
+  // Toggle selection
   const toggleSelection = (index: number) => {
     setSelectedOption(selectedOption === index ? null : index);
   };
