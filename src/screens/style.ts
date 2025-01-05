@@ -33,7 +33,9 @@ var styles = StyleSheet.create({
     alignItems: 'center',
   },
   pointsButtonContainer: {
-    alignItems: 'center',
+    marginHorizontal: 10,
+    top: scale(10),
+    position: 'relative',
   },
   pointsButtonBaseLayer: {
     position: 'absolute',
@@ -50,6 +52,7 @@ var styles = StyleSheet.create({
     backgroundColor: '#808b96', // Bottom layer color (adjust to match the shadow effect)
     borderRadius: 25,
     top: 5, // Push the base layer down to simulate depth
+    right: -3,
   },
   mainPointsButton: {
     width: scale(70),
@@ -66,8 +69,9 @@ var styles = StyleSheet.create({
   },
   pointButtonProperties: {
     flexDirection: 'row',
-    gap: 10,
-    padding: 10,
+    justifyContent: 'space-between',
+    // gap: scale(10),
+    paddingHorizontal: scale(10),
   },
   imageSize: {
     height: scale(62),
@@ -234,7 +238,7 @@ var styles = StyleSheet.create({
   bottomComponentsProperties: {
     flexDirection: 'row',
     gap: 30,
-    marginTop: 10,
+    bottom: scale(20),
   },
   rechargeText: {
     fontSize: 12,

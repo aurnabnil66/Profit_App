@@ -1,4 +1,4 @@
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
 import styles from '../screens/style';
 import LinearGradient from 'react-native-linear-gradient';
 import React, {useState} from 'react';
@@ -11,17 +11,54 @@ import MaterialComumityIcons from 'react-native-vector-icons/MaterialCommunityIc
 import foodItems from '../utils/foodItems';
 import ConformationModal from '../components/conformationModal';
 
-const points = ['1000', '5000', '10000', '50000'];
+const points = ['100', '500', '2000', '10000', '50000'];
 
 const HomeScreen = () => {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [selectedFoodItem, setSelectedFoodItem] = useState<number | null>(null);
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedPoint, setSelectedPoint] = useState<number | null>(null);
+  const [hoveredFoodItem, setHoveredFoodItem] = useState<number | null>(null);
+
+  // Hover all food items
+  const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+  const handleHoverAll = async () => {
+    setModalVisible(false);
+    // Sequentially hover food items with a faster delay
+    for (let index = 0; index < foodItems.length; index++) {
+      setHoveredFoodItem(index); // Update hover state
+      await sleep(150); // Wait 150ms (adjusted for faster hover)
+    }
+    // Reset hover after all items are hovered
+    setHoveredFoodItem(null);
+  };
 
   const toggleSelection = (index: number) => {
     setSelectedOption(selectedOption === index ? null : index);
   };
+
+  // FlatList for point buttons
+  const renderPointItems = ({item, index}: {item: string; index: number}) => (
+    <View style={styles.pointsButtonContainer}>
+      {/* Base layer for the 3D effect */}
+      <View style={styles.pointsButtonUnderLayer} />
+      <View style={styles.pointsButtonBaseLayer} />
+
+      {/* Main button with gradient */}
+      <TouchableOpacity onPress={() => setSelectedPoint(index)}>
+        <LinearGradient
+          colors={
+            selectedPoint === index
+              ? ['#f39c12', '#FFAB3F']
+              : ['#52C953', '#4BBD5E']
+          }
+          style={styles.mainPointsButton}>
+          <Text style={styles.pointsButtonText}>{item}</Text>
+        </LinearGradient>
+      </TouchableOpacity>
+    </View>
+  );
 
   return (
     <>
@@ -186,15 +223,19 @@ const HomeScreen = () => {
                           {item.name}
                         </Text>
                         <TouchableOpacity
-                          style={{
-                            ...styles.foodItemsButtonStyle,
-                            borderColor:
-                              selectedFoodItem === index ? 'red' : '#4BBD5E',
-                          }}
-                          onPress={() => setModalVisible(true)} // Show modal with the selected item
-                          onPressIn={() => setSelectedFoodItem(index)} // Change border color on press
-                          onPressOut={() => setSelectedFoodItem(null)} // Revert border color after release
-                        >
+                          style={[
+                            styles.foodItemsButtonStyle,
+                            {
+                              borderColor:
+                                hoveredFoodItem === index ||
+                                selectedFoodItem === index
+                                  ? 'red'
+                                  : '#4BBD5E',
+                            },
+                          ]}
+                          onPress={() => setModalVisible(true)} // Replace with modal logic
+                          onPressIn={() => setSelectedFoodItem(index)}
+                          onPressOut={() => setSelectedFoodItem(null)}>
                           <Image
                             source={item.image}
                             style={styles.foodItemsImageStyle}
@@ -224,12 +265,13 @@ const HomeScreen = () => {
                       )}
                     </View>
                   ))}
-                  {/* Modal should be rendered outside the container */}
 
+                  {/* Modal should be rendered outside the container */}
                   <ConformationModal
                     isVisible={isModalVisible}
                     onClose={() => setModalVisible(false)}
                     point={points[selectedPoint || 0]}
+                    pressToBet={() => handleHoverAll()}
                   />
                 </View>
                 <View style={styles.middleHorizontalSmallContainer}>
@@ -246,28 +288,14 @@ const HomeScreen = () => {
               <View style={styles.middleHorizontalThinLineView}></View>
 
               {/* Buttons */}
-              <View style={styles.pointButtonProperties}>
-                {points.map((point, index) => (
-                  <View style={styles.pointsButtonContainer} key={index}>
-                    {/* Base layer for the 3D effect */}
-                    <View style={styles.pointsButtonUnderLayer} />
-                    <View style={styles.pointsButtonBaseLayer} />
-
-                    {/* Main button with gradient */}
-                    <TouchableOpacity onPress={() => setSelectedPoint(index)}>
-                      <LinearGradient
-                        colors={
-                          selectedPoint === index
-                            ? ['#f39c12', '#FFAB3F']
-                            : ['#52C953', '#4BBD5E']
-                        }
-                        style={styles.mainPointsButton}>
-                        <Text style={styles.pointsButtonText}>{point}</Text>
-                      </LinearGradient>
-                    </TouchableOpacity>
-                  </View>
-                ))}
-              </View>
+              <FlatList
+                data={points}
+                keyExtractor={(_, index) => index.toString()}
+                renderItem={renderPointItems}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.pointButtonProperties}
+              />
 
               {/* Bottom Part */}
               <View style={styles.bottomComponentsProperties}>

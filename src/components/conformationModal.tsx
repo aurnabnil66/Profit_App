@@ -15,9 +15,15 @@ interface FoodItemModalProps {
   isVisible: boolean;
   onClose: () => void;
   point: string;
+  pressToBet: () => void;
 }
 
-const ConformationModal = ({isVisible, onClose, point}: FoodItemModalProps) => {
+const ConformationModal = ({
+  isVisible,
+  onClose,
+  point,
+  pressToBet,
+}: FoodItemModalProps) => {
   return (
     <Modal
       visible={isVisible}
@@ -80,7 +86,9 @@ const ConformationModal = ({isVisible, onClose, point}: FoodItemModalProps) => {
               <Text style={styles.cancelText}>CANCEL</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.clickToBetButton}>
+            <TouchableOpacity
+              style={styles.clickToBetButton}
+              onPress={pressToBet}>
               <Text style={styles.clickToBetText}>CLICK TO BET</Text>
             </TouchableOpacity>
           </View>
