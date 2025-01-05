@@ -9,22 +9,24 @@ import Fontawesome6 from 'react-native-vector-icons/FontAwesome6';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialComumityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import foodItems from '../utils/foodItems';
-import ConformationModal from '../components/conformationModal';
+import ConformationModal from '../components/conformationModal/conformationModal';
+import ChartModal from '../components/ChartModal/chartModal';
 
 const points = ['100', '500', '2000', '10000', '50000'];
 
 const HomeScreen = () => {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [selectedFoodItem, setSelectedFoodItem] = useState<number | null>(null);
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isConfirmModalVisible, setConfirmModalVisible] = useState(false);
   const [selectedPoint, setSelectedPoint] = useState<number | null>(null);
   const [hoveredFoodItem, setHoveredFoodItem] = useState<number | null>(null);
+  const [isChartModalVisible, setChartModalVisible] = useState(false);
 
   // Hover all food items
   const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
   const handleHoverAll = async () => {
-    setModalVisible(false);
+    setConfirmModalVisible(false);
     // Sequentially hover food items with a faster delay
     for (let index = 0; index < foodItems.length; index++) {
       setHoveredFoodItem(index); // Update hover state
@@ -234,7 +236,7 @@ const HomeScreen = () => {
                                   : '#4BBD5E',
                             },
                           ]}
-                          onPress={() => setModalVisible(true)} // Replace with modal logic
+                          onPress={() => setConfirmModalVisible(true)} // Replace with modal logic
                           onPressIn={() => setSelectedFoodItem(index)}
                           onPressOut={() => setSelectedFoodItem(null)}>
                           <Image
@@ -249,6 +251,13 @@ const HomeScreen = () => {
                     ))}
                   </View>
                 </LinearGradient>
+                {/* Modal should be rendered outside the container */}
+                <ConformationModal
+                  isVisible={isConfirmModalVisible}
+                  onClose={() => setConfirmModalVisible(false)}
+                  point={points[selectedPoint || 0]}
+                  pressToBet={() => handleHoverAll()}
+                />
               </View>
 
               {/* Middle Horizontal Container */}
@@ -266,14 +275,6 @@ const HomeScreen = () => {
                       )}
                     </View>
                   ))}
-
-                  {/* Modal should be rendered outside the container */}
-                  <ConformationModal
-                    isVisible={isModalVisible}
-                    onClose={() => setModalVisible(false)}
-                    point={points[selectedPoint || 0]}
-                    pressToBet={() => handleHoverAll()}
-                  />
                 </View>
                 <View style={styles.middleHorizontalSmallContainer}>
                   <MaterialIcons
@@ -312,8 +313,16 @@ const HomeScreen = () => {
                     <Text style={styles.bottomBartext}>89</Text>
                   </View>
                 </View>
-                <TouchableOpacity style={styles.rechargeButton}>
+                <TouchableOpacity
+                  style={styles.rechargeButton}
+                  onPress={() => setChartModalVisible(true)}>
                   <Text style={styles.rechargeText}>Recharge</Text>
+
+                  {/* Chart Modal should be rendered outside the container */}
+                  <ChartModal
+                    isVisible={isChartModalVisible}
+                    onClose={() => setChartModalVisible(false)}
+                  />
                 </TouchableOpacity>
               </View>
             </LinearGradient>
