@@ -7,11 +7,13 @@ import {
   TouchableOpacity,
   Pressable,
   Dimensions,
+  Image,
 } from 'react-native';
 import styles from './style';
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {LineChart} from 'react-native-chart-kit';
+import foodItems from '../../utils/foodItems';
 
 interface ChartModalProps {
   isVisible: boolean;
@@ -31,18 +33,9 @@ const data = {
   legend: ['Rainy Days'], // optional
 };
 
-const screenWidth = Dimensions.get('window').width;
+const numberValues = Array.from({length: 30}, (_, i) => i + 1);
 
-const chartConfig = {
-  backgroundGradientFrom: '#1E2923',
-  backgroundGradientFromOpacity: 0,
-  backgroundGradientTo: '#08130D',
-  backgroundGradientToOpacity: 0.5,
-  color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-  strokeWidth: 2, // optional, default 3
-  barPercentage: 0.5,
-  useShadowColorFromDataset: false, // optional
-};
+const foodItemsYaxis = foodItems.map(item => item.image);
 
 const ChartModal = ({isVisible, onClose}: ChartModalProps) => {
   return (
@@ -60,20 +53,17 @@ const ChartModal = ({isVisible, onClose}: ChartModalProps) => {
           <LinearGradient
             colors={['#D3F698', '#fcf3cf', '#fef9e7']}
             start={{x: 1, y: 1}}
-            end={{x: 1, y: 0}}>
-            {/* <View
+            end={{x: 1, y: 0}}
+            style={styles.modalHeader}>
+            <View
               style={{
                 flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-around',
                 top: 7,
               }}>
-              <View style={{left: 40}}>
-                <Text style={styles.modalHeaderText}>
-                  Spending Confirmation
-                </Text>
+              <View style={{left: 10}}>
+                <Text style={styles.modalHeaderText}>Trend Details</Text>
               </View>
-              <View style={{left: 25}}>
+              <View style={{left: 90}}>
                 <TouchableOpacity
                   onPress={onClose}
                   style={{
@@ -91,16 +81,42 @@ const ChartModal = ({isVisible, onClose}: ChartModalProps) => {
                   />
                 </TouchableOpacity>
               </View>
-            </View> */}
-            <LineChart
-              data={data}
-              width={screenWidth}
-              height={256}
-              verticalLabelRotation={30}
-              chartConfig={chartConfig}
-              bezier
-            />
+            </View>
           </LinearGradient>
+
+          <LineChart
+            data={{
+              labels: numberValues.map(String),
+              datasets: [
+                {
+                  data: foodItemsYaxis,
+                },
+              ],
+            }}
+            width={300} // from react-native
+            height={250}
+            yAxisInterval={1} // optional, defaults to 1
+            chartConfig={{
+              backgroundColor: '#e26a00',
+              backgroundGradientFrom: '#fb8c00',
+              backgroundGradientTo: '#ffa726',
+              decimalPlaces: 2, // optional, defaults to 2dp
+              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              style: {
+                borderRadius: 16,
+              },
+              propsForDots: {
+                r: '6',
+                strokeWidth: '2',
+                stroke: '#ffa726',
+              },
+            }}
+            style={{
+              marginVertical: 8,
+              borderRadius: 16,
+            }}
+          />
 
           {/* Modal Buttons */}
           <View style={styles.modalButtonsProperties}>
