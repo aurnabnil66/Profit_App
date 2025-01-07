@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fcf3cf',
     padding: 20,
     borderRadius: 10,
-    width: scale(300),
+    width: scale(335),
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   modalHeader: {
     height: scale(35),
-    width: scale(300),
+    width: scale(335),
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     bottom: scale(20),
@@ -73,6 +73,29 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     color: '#fff',
+  },
+  secondaryHeaderContainer: {
+    width: scale(270),
+    //backgroundColor: 'white',
+    flexDirection: 'row',
+    gap: scale(2),
+    justifyContent: 'space-between',
+    //bottom: scale(15),
+  },
+  secondaryHeaderContainerProperties: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: scale(5),
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: '#4BBD5E',
+    borderRadius: 50,
+    height: scale(30),
+    width: scale(30),
+  },
+  secondaryHeaderContainerImages: {
+    height: scale(20),
+    width: scale(20),
   },
 });
 

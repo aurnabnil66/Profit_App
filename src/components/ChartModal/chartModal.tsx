@@ -33,7 +33,7 @@ const data = {
   legend: ['Rainy Days'], // optional
 };
 
-const numberValues = Array.from({length: 30}, (_, i) => i + 1);
+const numberValues = Array.from({length: 10}, (_, i) => i + 1);
 
 const foodItemsYaxis = foodItems.map(item => item.image);
 
@@ -55,6 +55,7 @@ const ChartModal = ({isVisible, onClose}: ChartModalProps) => {
             start={{x: 1, y: 1}}
             end={{x: 1, y: 0}}
             style={styles.modalHeader}>
+            {/* Modal Header */}
             <View
               style={{
                 flexDirection: 'row',
@@ -63,7 +64,7 @@ const ChartModal = ({isVisible, onClose}: ChartModalProps) => {
               <View style={{left: 10}}>
                 <Text style={styles.modalHeaderText}>Trend Details</Text>
               </View>
-              <View style={{left: 90}}>
+              <View style={{left: 110}}>
                 <TouchableOpacity
                   onPress={onClose}
                   style={{
@@ -84,6 +85,37 @@ const ChartModal = ({isVisible, onClose}: ChartModalProps) => {
             </View>
           </LinearGradient>
 
+          {/* Secondary Header */}
+          <View style={{flexDirection: 'row', gap: 5, bottom: 10}}>
+            <View
+              style={{
+                height: 30,
+                width: 50,
+                borderRadius: 8,
+                backgroundColor: '#4BBD5E',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Text style={{color: 'white', fontSize: 12, fontWeight: '700'}}>
+                Record
+              </Text>
+            </View>
+            <View style={styles.secondaryHeaderContainer}>
+              {foodItems.map((item, index) => (
+                <View
+                  key={index}
+                  style={styles.secondaryHeaderContainerProperties}>
+                  {item.image && (
+                    <Image
+                      source={item.image}
+                      style={styles.secondaryHeaderContainerImages}
+                    />
+                  )}
+                </View>
+              ))}
+            </View>
+          </View>
+
           <LineChart
             data={{
               labels: numberValues.map(String),
@@ -93,23 +125,23 @@ const ChartModal = ({isVisible, onClose}: ChartModalProps) => {
                 },
               ],
             }}
-            width={300} // from react-native
-            height={250}
+            width={335} // from react-native
+            height={280}
             yAxisInterval={1} // optional, defaults to 1
             chartConfig={{
-              backgroundColor: '#e26a00',
-              backgroundGradientFrom: '#fb8c00',
-              backgroundGradientTo: '#ffa726',
+              backgroundColor: '#D3F698',
+              backgroundGradientFrom: '#EFEFAA',
+              backgroundGradientTo: '#fcf3cf ',
               decimalPlaces: 2, // optional, defaults to 2dp
-              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-              labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              color: () => `rgba(75, 189, 94, 1)`,
+              labelColor: () => `rgba(75, 189, 94, 1)`,
               style: {
                 borderRadius: 16,
               },
               propsForDots: {
-                r: '6',
+                r: '10',
                 strokeWidth: '2',
-                stroke: '#ffa726',
+                stroke: '#bb8fce',
               },
             }}
             style={{
@@ -117,17 +149,6 @@ const ChartModal = ({isVisible, onClose}: ChartModalProps) => {
               borderRadius: 16,
             }}
           />
-
-          {/* Modal Buttons */}
-          <View style={styles.modalButtonsProperties}>
-            <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
-              <Text style={styles.cancelText}>CANCEL</Text>
-            </TouchableOpacity>
-
-            {/* <TouchableOpacity style={styles.clickToBetButton}>
-              <Text style={styles.clickToBetText}>CLICK TO BET</Text>
-            </TouchableOpacity> */}
-          </View>
         </View>
       </View>
     </Modal>
