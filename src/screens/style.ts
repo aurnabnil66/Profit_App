@@ -73,9 +73,20 @@ var styles = StyleSheet.create({
     // gap: scale(10),
     paddingHorizontal: scale(10),
   },
+  profitText: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: '#4BBD5E',
+    top: 35,
+  },
   imageSize: {
     height: scale(62),
     width: scale(62),
+  },
+  imageContainer: {
+    height: 90,
+    width: 90,
+    borderRadius: 50,
   },
   imageContainerStyle: {
     flexDirection: 'column',

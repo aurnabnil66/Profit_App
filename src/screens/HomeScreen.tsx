@@ -12,14 +12,17 @@ import foodItems from '../utils/foodItems';
 import ConformationModal from '../components/conformationModal/conformationModal';
 import ChartModal from '../components/ChartModal/chartModal';
 
-const points = ['100', '500', '2000', '10000', '50000'];
+const points = [100, 500, 2000, 10000, 50000];
 
 const HomeScreen = () => {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [selectedFoodItem, setSelectedFoodItem] = useState<number | null>(null);
+  const [selectedFoodItems, setSelectedFoodItems] = useState<number[]>([]);
+  const [activeFoodItems, setActiveFoodItems] = useState<number[]>([]);
+  const [selectedRewardValue, setSelectedRewardValue] = useState<number>(0);
   const [isConfirmModalVisible, setConfirmModalVisible] = useState(false);
-  const [selectedPoint, setSelectedPoint] = useState<number | null>(null);
-  const [hoveredFoodItem, setHoveredFoodItem] = useState<number | null>(null);
+  const [selectedPoint, setSelectedPoint] = useState<number | null>(null); // index
+  const [selectedPointValue, setSelectedPointValue] = useState<number>(0);
+  const [hoveredFoodItem, setHoveredFoodItem] = useState<number | null>(null); // index
   const [isChartModalVisible, setChartModalVisible] = useState(false);
 
   // Hover all food items
@@ -41,15 +44,33 @@ const HomeScreen = () => {
     setSelectedOption(selectedOption === index ? null : index);
   };
 
+  // Function for point buttons
+  const pointButtonPressed = (index: number) => {
+    setSelectedPoint(index);
+
+    setSelectedPointValue(points[index]);
+
+    setActiveFoodItems([]);
+
+    setSelectedFoodItems([]);
+
+    // Deselect the button after 30 seconds
+    setTimeout(() => {
+      setConfirmModalVisible(true);
+      setActiveFoodItems([]);
+      setSelectedPoint(null); // Assuming null means no selection
+    }, 30000); // 30 seconds
+  };
+
   // FlatList for point buttons
-  const renderPointItems = ({item, index}: {item: string; index: number}) => (
+  const renderPointItems = ({item, index}: {item: number; index: number}) => (
     <View style={styles.pointsButtonContainer}>
       {/* Base layer for the 3D effect */}
       <View style={styles.pointsButtonUnderLayer} />
       <View style={styles.pointsButtonBaseLayer} />
 
       {/* Main button with gradient */}
-      <TouchableOpacity onPress={() => setSelectedPoint(index)}>
+      <TouchableOpacity onPress={() => pointButtonPressed(index)}>
         <LinearGradient
           colors={
             selectedPoint === index
@@ -147,7 +168,7 @@ const HomeScreen = () => {
                 start={{x: 1, y: 0}}
                 end={{x: 0, y: 1}}
                 colors={['#EFEFAA', '#D3F698', '#84E282', '#B6DAFD']}
-                style={{height: 90, width: 90, borderRadius: 50}}>
+                style={styles.imageContainer}>
                 <View style={styles.imageContainerStyle}>
                   <Image
                     source={require('../assets/salad.png')} // Path to the PNG file
@@ -181,7 +202,7 @@ const HomeScreen = () => {
                 start={{x: 1, y: 0}}
                 end={{x: 0, y: 1}}
                 colors={['#EFEFAA', '#D3F698', '#84E282', '#B6DAFD']}
-                style={{height: 90, width: 90, borderRadius: 50}}>
+                style={styles.imageContainer}>
                 <View style={styles.imageContainerStyle}>
                   <Image
                     source={require('../assets/pizza.png')} // Path to the PNG file
@@ -201,15 +222,7 @@ const HomeScreen = () => {
               end={{x: 0, y: 1}}
               colors={['#B6DAFD', '#D3F698', '#d6eaf8', '#d2b4de', '#a569bd']}
               style={styles.middleBoxViewProperties}>
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontWeight: '800',
-                  color: '#4BBD5E',
-                  top: 35,
-                }}>
-                Today's Profit: 0
-              </Text>
+              <Text style={styles.profitText}>Today's Profit: 0</Text>
 
               {/* Inner Middle Box with Gradient */}
               <View style={styles.innerMiddleBoxView}>
@@ -231,21 +244,25 @@ const HomeScreen = () => {
                             {
                               borderColor:
                                 hoveredFoodItem === index ||
-                                selectedFoodItem === index
+                                activeFoodItems.includes(index)
                                   ? 'red'
                                   : '#4BBD5E',
                             },
                           ]}
-                          onPress={() => setConfirmModalVisible(true)} // Replace with modal logic
-                          onPressIn={() => setSelectedFoodItem(index)}
-                          onPressOut={() => setSelectedFoodItem(null)}>
+                          onPress={() => setConfirmModalVisible(false)} // Replace with modal logic
+                          onPressIn={() => {
+                            if (selectedPoint !== null) {
+                              setSelectedFoodItems(prev => [...prev, index]);
+                              setActiveFoodItems(prev => [...prev, index]);
+                            }
+                          }}>
                           <Image
                             source={item.image}
                             style={styles.foodItemsImageStyle}
                           />
                         </TouchableOpacity>
                         <Text style={styles.foodItemsRewardText}>
-                          {item.reward}
+                          {`win ${item.reward}X`}
                         </Text>
                       </View>
                     ))}
@@ -255,8 +272,9 @@ const HomeScreen = () => {
                 <ConformationModal
                   isVisible={isConfirmModalVisible}
                   onClose={() => setConfirmModalVisible(false)}
-                  point={points[selectedPoint || 0]}
-                  pressToBet={() => handleHoverAll()}
+                  point={selectedPointValue || 0}
+                  //reward={selectedRewardValue || 0}
+                  reward={selectedFoodItems.map(i => foodItems[i]?.reward || 0)}
                 />
               </View>
 
@@ -334,17 +352,3 @@ const HomeScreen = () => {
 };
 
 export default HomeScreen;
-
-// EFEFAA
-
-// D3F698
-
-// 84E282
-
-// FFBC42
-
-// B6DAFD
-
-// F4D8FF
-
-// 4BBD5E

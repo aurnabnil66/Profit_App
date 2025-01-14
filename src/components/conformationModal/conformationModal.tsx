@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Modal,
-  TouchableOpacity,
-  Pressable,
-} from 'react-native';
+import {View, Text, Modal, TouchableOpacity, Pressable} from 'react-native';
 import styles from './style';
 import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -14,14 +7,16 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 interface FoodItemModalProps {
   isVisible: boolean;
   onClose: () => void;
-  point: string;
-  pressToBet: () => void;
+  point: number;
+  reward: number[];
+  pressToBet?: () => void;
 }
 
 const ConformationModal = ({
   isVisible,
   onClose,
   point,
+  reward,
   pressToBet,
 }: FoodItemModalProps) => {
   return (
@@ -75,8 +70,8 @@ const ConformationModal = ({
           </LinearGradient>
 
           <Text style={styles.modalText}>
-            {point !== ''
-              ? `You are spending ${point} coins to play once`
+            {point !== 0
+              ? `You are spending ${point} X ${reward} points to play once`
               : 'You are spending 0 coin to play once'}
           </Text>
 
