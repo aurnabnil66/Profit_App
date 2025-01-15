@@ -36,30 +36,18 @@ const ConformationModal = ({
             start={{x: 1, y: 1}}
             end={{x: 1, y: 0}}
             style={styles.modalHeader}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-around',
-                top: 7,
-              }}>
+            <View style={styles.modalHeaderStyle}>
               <View style={{left: 40}}>
                 <Text style={styles.modalHeaderText}>
                   Spending Confirmation
                 </Text>
               </View>
-              <View style={{left: 25}}>
+              <View style={styles.closeButtonPosition}>
                 <TouchableOpacity
                   onPress={onClose}
-                  style={{
-                    backgroundColor: '#4BBD5E',
-                    height: 20,
-                    width: 20,
-                    borderRadius: 50,
-                    justifyContent: 'center',
-                  }}>
+                  style={styles.closeButtonStyle}>
                   <Ionicons
-                    style={{textAlign: 'center'}}
+                    style={styles.closeButtonStyle}
                     name="close"
                     size={15}
                     color="#EFEFAA"
@@ -71,7 +59,9 @@ const ConformationModal = ({
 
           <Text style={styles.modalText}>
             {point !== 0
-              ? `You are spending ${point} X ${reward} points to play once`
+              ? `You are spending ${point} X ${reward.join(
+                  ' X ',
+                )} points to play once`
               : 'You are spending 0 coin to play once'}
           </Text>
 

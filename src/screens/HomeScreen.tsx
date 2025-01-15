@@ -1,7 +1,7 @@
 import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
 import styles from '../screens/style';
 import LinearGradient from 'react-native-linear-gradient';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -18,7 +18,6 @@ const HomeScreen = () => {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [selectedFoodItems, setSelectedFoodItems] = useState<number[]>([]);
   const [activeFoodItems, setActiveFoodItems] = useState<number[]>([]);
-  const [selectedRewardValue, setSelectedRewardValue] = useState<number>(0);
   const [isConfirmModalVisible, setConfirmModalVisible] = useState(false);
   const [selectedPoint, setSelectedPoint] = useState<number | null>(null); // index
   const [selectedPointValue, setSelectedPointValue] = useState<number>(0);
@@ -28,8 +27,15 @@ const HomeScreen = () => {
   // Hover all food items
   const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
+  // to handle hover all food items when modal is closed
+  useEffect(() => {
+    if (!isConfirmModalVisible) {
+      handleHoverAll();
+    }
+  }, [isConfirmModalVisible]);
+
+  // Hover all food items
   const handleHoverAll = async () => {
-    setConfirmModalVisible(false);
     // Sequentially hover food items with a faster delay
     for (let index = 0; index < foodItems.length; index++) {
       setHoveredFoodItem(index); // Update hover state
@@ -271,9 +277,11 @@ const HomeScreen = () => {
                 {/* Modal should be rendered outside the container */}
                 <ConformationModal
                   isVisible={isConfirmModalVisible}
-                  onClose={() => setConfirmModalVisible(false)}
+                  onClose={() => {
+                    setConfirmModalVisible(false);
+                    setHoveredFoodItem(null);
+                  }}
                   point={selectedPointValue || 0}
-                  //reward={selectedRewardValue || 0}
                   reward={selectedFoodItems.map(i => foodItems[i]?.reward || 0)}
                 />
               </View>

@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   modalText: {
     fontSize: 14,
     fontWeight: '600',
@@ -33,6 +34,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '800',
   },
+  modalHeaderStyle: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    top: 8,
+  },
   modalHeader: {
     height: scale(35),
     width: scale(300),
@@ -40,6 +47,18 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     bottom: scale(20),
   },
+  closeButtonPosition: {
+    left: 30,
+    top: 2,
+  },
+  closeButtonStyle: {
+    backgroundColor: '#4BBD5E',
+    height: 20,
+    width: 20,
+    borderRadius: 50,
+    justifyContent: 'center',
+  },
+  closeIconPosition: {},
   cancelButton: {
     height: 35,
     width: 100,
